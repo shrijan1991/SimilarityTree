@@ -51,61 +51,7 @@ import java.util.Set;
 import java.util.Vector;
 
 /**
- <!-- globalinfo-start -->
- * Class implementing minimal cost-complexity pruning.<br/>
- * Note when dealing with missing values, use "fractional instances" method instead of surrogate split method.<br/>
- * <br/>
- * For more information, see:<br/>
- * <br/>
- * Leo Breiman, Jerome H. Friedman, Richard A. Olshen, Charles J. Stone (1984). Classification and Regression Trees. Wadsworth International Group, Belmont, California.
- * <p/>
- <!-- globalinfo-end -->	
- *
- <!-- technical-bibtex-start -->
- * BibTeX:
- * <pre>
- * </pre>
- * <p/>
- <!-- technical-bibtex-end -->
- *
- <!-- options-start -->
- * Valid options are: <p/>
- * 
- * <pre> -S &lt;num&gt;
- *  Random number seed.
- *  (default 1)</pre>
- * 
- * <pre> -D
- *  If set, classifier is run in debug mode and
- *  may output additional info to the console</pre>
- * 
- * <pre> -M &lt;min no&gt;
- *  The minimal number of instances at the terminal nodes.
- *  (default 2)</pre>
- * 
- * <pre> -N &lt;num folds&gt;
- *  The number of folds used in the minimal cost-complexity pruning.
- *  (default 5)</pre>
- * 
- * <pre> -U
- *  Don't use the minimal cost-complexity pruning.
- *  (default yes).</pre>
- * 
- * <pre> -H
- *  Don't use the heuristic method for binary split.
- *  (default true).</pre>
- * 
- * <pre> -A
- *  Use 1 SE rule to make pruning decision.
- *  (default no).</pre>
- * 
- * <pre> -C
- *  Percentage of training data size (0-1].
- *  (default 1).</pre>
- * 
- <!-- options-end -->
- *
- */
+
 public class SimTree
   extends RandomizableClassifier
   implements AdditionalMeasureProducer, TechnicalInformationHandler {
@@ -258,14 +204,6 @@ public class SimTree
    * Make binary decision tree recursively.
    * 
    * @param data 		the training instances
-   * @param totalInstances 	total number of instances
-   * @param sortedIndices 	sorted indices of the instances
-   * @param weights 		weights of the instances
-   * @param classProbs 		class probabilities
-   * @param totalWeight 	total weight of instances
-   * @param minNumObj 		minimal number of instances at leaf nodes
-   * @param useHeuristic 	if use heuristic search for nominal attributes in multi-class problem
-   * @throws Exception 		if something goes wrong
    */
   protected void makeTree(Instances data) throws Exception{
 
@@ -326,17 +264,8 @@ public class SimTree
    * Split data into two subsets and store sorted indices and weights for two
    * successor nodes.
    * 
-   * @param subsetIndices 	sorted indecis of instances for each attribute 
-   * 				for two successor node
-   * @param subsetWeights 	weights of instances for each attribute for 
-   * 				two successor node
-   * @param att 		attribute the split based on
-   * @param splitPoint 		split point the split based on if att is numeric
-   * @param splitStr 		split subset the split based on if att is nominal
-   * @param sortedIndices 	sorted indices of the instances to be split
-   * @param weights 		weights of the instances to bes split
-   * @param data 		training data
-   * @throws Exception 		if something goes wrong  
+   * @param splitInstances       Split instances based on order and midpoint
+   * @param data		 Training set passed to splitData	
    */
   protected void splitData(Instances[] splitInstances, Instances data) throws Exception {
 	int i, j;
